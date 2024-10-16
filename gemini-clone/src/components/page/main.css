@@ -60,16 +60,23 @@
   font-size: 17px;
   color: #585858;
 }
-.main .card:hover {
+.main .card :hover {
   background-color: #dfe4ea;
 }
 .main-bottom {
-  position: absolute;
+  /* position: absolute
+  ;
   bottom: 0;
   width: 100%;
+  max-width: 900px;*/
+  margin: 0 auto; 
+  margin-top: 40px; 
   max-width: 900px;
-  padding: 0px 20px;
-  margin: auto;
+  bottom: 0;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 83%;
 }
 .search-box {
   display: flex;
@@ -98,19 +105,19 @@
   font-size: 13px;
   text-align: center;
   font-weight: 300;
-  margin: 15px auto;
+  /* margin: 15px auto; */
 }
 .search-box div {
   display: flex;
   align-items: center;
   gap: 15px;
 }
-.result {
+.results {
   padding: 0px 5%;
   max-height: 70vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
-.result::-webkit-scrollbar {
+.results::-webkit-scrollbar {
   display: none;
 }
 .result-title {

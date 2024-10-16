@@ -8,10 +8,12 @@ const App =   () => {
   // console.log(reap);
   
   return (
-    <>
-    <Sidebar/>
+    <div style={{display:'flex', width:'100%'}} >
+      <Sidebar/>
+
+     
     <Main/>
-    </>
+    </div>
   );
 };
 
