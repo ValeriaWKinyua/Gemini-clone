@@ -1,10 +1,4 @@
-// Main.jsx
-
 import React, { useContext } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { okaidia } from "react-syntax-highlighter/dist/esm/styles/prism"; // You can choose any style you prefer
 import "./main.css";
 import { assets } from "../../images/assets";
 import { Context } from "../../context/context";
@@ -12,13 +6,16 @@ import { Context } from "../../context/context";
 const Main = () => {
   const {
     onSent,
-    showResults,
+    showResults, // Import showResults from context
     loading,
     resultData,
     input,
     setInput,
     recentPrompt,
   } = useContext(Context);
+
+  // Debugging log to check the value of showResults during rendering
+  console.log("showResults in Main component:", showResults);
 
   return (
     <div className="main">
@@ -37,41 +34,19 @@ const Main = () => {
               <p>How can I help you today?</p>
             </div>
             <div className="cards">
-              <div
-                className="card"
-                onClick={() =>
-                  onSent("Suggest beautiful places for an oncoming road trip")
-                }
-              >
+              <div className="card">
                 <p>Suggest beautiful places for an oncoming road trip</p>
                 <img src={assets.compass_icon} alt="Compass Icon" />
               </div>
-              <div
-                className="card"
-                onClick={() =>
-                  onSent("Briefly summarize this concept: urban planning")
-                }
-              >
+              <div className="card">
                 <p>Briefly summarize this concept: urban planning</p>
                 <img src={assets.bulb_icon} alt="Bulb Icon" />
               </div>
-              <div
-                className="card"
-                onClick={() =>
-                  onSent(
-                    "Brainstorm team bonding activities for a work retreat"
-                  )
-                }
-              >
+              <div className="card">
                 <p>Brainstorm team bonding activities for a work retreat</p>
                 <img src={assets.message_icon} alt="Message Icon" />
               </div>
-              <div
-                className="card"
-                onClick={() =>
-                  onSent("Improve the readability of the following code")
-                }
-              >
+              <div className="card">
                 <p>Improve the readability of the following code</p>
                 <img src={assets.code_icon} alt="Code Icon" />
               </div>
@@ -80,11 +55,11 @@ const Main = () => {
         ) : (
           <div className="results">
             <div className="result-title">
-              <img src={assets.user_icon} alt="User" />
+              <img src={assets.user_icon} alt="" />
               <p>{recentPrompt}</p>
             </div>
             <div className="result-data">
-              <img src={assets.gemini_icon} alt="Gemini Icon" />
+              <img src={assets.gemini_icon} alt="" />
               {loading ? (
                 <div className="loader">
                   <hr />
@@ -92,34 +67,13 @@ const Main = () => {
                   <hr />
                 </div>
               ) : (
-                <ReactMarkdown
-                  children={resultData}
-                  remarkPlugins={[remarkGfm]}
-                  components={{
-                    code({ node, inline, className, children, ...props }) {
-                      const match = /language-(\w+)/.exec(className || "");
-                      return !inline && match ? (
-                        <SyntaxHighlighter
-                          style={okaidia}
-                          language={match[1]}
-                          PreTag="div"
-                          {...props}
-                        >
-                          {String(children).replace(/\n$/, "")}
-                        </SyntaxHighlighter>
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                  }}
-                />
+                <p dangerouslySetInnerHTML={{ __html: resultData }}></p>
               )}
             </div>
           </div>
         )}
       </div>
+      {/* {loading ? <p>Loading...</p> : <p>{resultData}</p>} */}
 
       <div className="main-bottom">
         <div className="search-box">
@@ -128,24 +82,15 @@ const Main = () => {
             value={input}
             type="text"
             placeholder="Enter a prompt here"
-            disabled={loading} // Disable input when loading
           />
           <div>
             <img src={assets.gallery_icon} alt="Gallery Icon" />
             <img src={assets.mic_icon} alt="Mic Icon" />
             {input ? (
               <img
-                onClick={() => {
-                  if (!loading) {
-                    onSent(); // Send without arguments to use the input value
-                  }
-                }}
+                onClick={() => onSent(input)}
                 src={assets.send_icon}
                 alt="Send Icon"
-                style={{
-                  opacity: loading ? 0.5 : 1,
-                  cursor: loading ? "not-allowed" : "pointer",
-                }}
               />
             ) : null}
           </div>

@@ -14,7 +14,7 @@ const ContextProvider = (props) => {
   const delayPara = (index, nextWord) => {
     setTimeout(function () {
       setResultData((prev) => prev + nextWord);
-    }, 20 * index);
+    }, 15 * index);
   };
 
   const newChat = () => { 
@@ -26,7 +26,7 @@ const ContextProvider = (props) => {
     // if (!input) return;
     setResultData("");
     setLoading(true);
-    setShowResults(true); // Update showResults to true when submitting the prompt
+    setShowResults(true); 
     let response = [];
     if (prompt !== undefined) {
       response = await run(prompt);
@@ -36,9 +36,6 @@ const ContextProvider = (props) => {
       setRecentPrompt(input);
       response = await run(input);
     }
-    // setPrevPrompts((prev) => [...prev, input]);
-    // console.log("showResults after onSent:", showResults);
-    // const response = await run(input);
 
     let resposeArray = response.split("**");
     let newResponse = "";
