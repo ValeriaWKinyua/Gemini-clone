@@ -68,7 +68,9 @@ const Main = () => {
               </div>
               <div
                 className="card"
-                onClick={() => onSent("Improve the readability of the following code")}
+                onClick={() =>
+                  onSent("Improve the readability of the following code")
+                }
               >
                 <p>Improve the readability of the following code</p>
                 <img src={assets.code_icon} alt="Code Icon" />
@@ -131,19 +133,21 @@ const Main = () => {
           <div>
             <img src={assets.gallery_icon} alt="Gallery Icon" />
             <img src={assets.mic_icon} alt="Mic Icon" />
-            <img
-              onClick={() => {
-                if (!loading) {
-                  onSent(); // Send without arguments to use the input value
-                }
-              }}
-              src={assets.send_icon}
-              alt="Send Icon"
-              style={{
-                opacity: loading ? 0.5 : 1,
-                cursor: loading ? "not-allowed" : "pointer",
-              }}
-            />
+            {input ? (
+              <img
+                onClick={() => {
+                  if (!loading) {
+                    onSent(); // Send without arguments to use the input value
+                  }
+                }}
+                src={assets.send_icon}
+                alt="Send Icon"
+                style={{
+                  opacity: loading ? 0.5 : 1,
+                  cursor: loading ? "not-allowed" : "pointer",
+                }}
+              />
+            ) : null}
           </div>
         </div>
         <p className="bottom-info">
